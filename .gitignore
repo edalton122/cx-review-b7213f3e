@@ -1,0 +1,7 @@
+node_modules
+dist
+.astro
+.DS_Store
+
+# Third-party and customer screenshots stay local until we have permission to publish them.
+public/screenshots/roofr-*

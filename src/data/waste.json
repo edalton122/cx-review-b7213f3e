@@ -1,0 +1,16 @@
+{
+  "job": { "squares": 28.4, "pitch": "8/12" },
+  "complexity": [
+    { "value": 0, "label": "Simple (+0%)" },
+    { "value": 2, "label": "Moderate, 7/12–9/12 (+2%)", "default": true },
+    { "value": 5, "label": "Steep or cut-up, 10/12+ (+5%)" }
+  ],
+  "lines": [
+    { "id": "shingles", "name": "Architectural shingles", "measured": 28.4, "mu": "sq", "waste": 12, "coverage": 0.3333333333333333, "unit": "bundle", "coverageLabel": "3 bundles / sq" },
+    { "id": "underlay", "name": "Synthetic underlayment", "measured": 28.4, "mu": "sq", "waste": 5, "coverage": 10, "unit": "roll", "coverageLabel": "10 sq / roll" },
+    { "id": "icewater", "name": "Ice & water shield (eaves + valleys)", "measured": 186, "mu": "lf", "waste": 8, "coverage": 65, "unit": "roll", "coverageLabel": "65 lf / roll" },
+    { "id": "starter", "name": "Starter strip (eaves + rakes)", "measured": 212, "mu": "lf", "waste": 5, "coverage": 120, "unit": "bundle", "coverageLabel": "120 lf / bundle" },
+    { "id": "ridge", "name": "Hip & ridge cap", "measured": 64, "mu": "lf", "waste": 10, "coverage": 25, "unit": "bundle", "coverageLabel": "25 lf / bundle" },
+    { "id": "drip", "name": "Drip edge", "measured": 212, "mu": "lf", "waste": 5, "coverage": 10, "unit": "piece", "coverageLabel": "10 ft / piece" }
+  ]
+}

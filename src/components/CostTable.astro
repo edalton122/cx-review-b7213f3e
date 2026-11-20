@@ -1,0 +1,27 @@
+---
+import cost from '../data/cost.json';
+---
+<section id="cost">
+  <div class="sec-head">
+    <p class="eyebrow">Cost</p>
+    <h2>Total cost, with add-ons listed</h2>
+    <p class="muted">Every optional add-on is its own line, so you can see exactly what each one costs.</p>
+  </div>
+  <div class="wrap-tbl tbl">
+    <table class="cost">
+      <thead><tr><th>Item</th><th>Status</th><th class="num">Yearly</th><th>Notes</th></tr></thead>
+      <tbody>
+        {cost.rows.map((r) => (
+          <tr>
+            <td>{r.item}</td>
+            <td><span class={`pill s-${r.status}`}>{r.pill}</span></td>
+            <td class="num">{r.yearly}</td>
+            <td class="muted">{r.note}</td>
+          </tr>
+        ))}
+      </tbody>
+      <tfoot><tr><td>{cost.total.label}</td><td></td><td class="num">{cost.total.yearly}</td><td>{cost.total.note}</td></tr></tfoot>
+    </table>
+  </div>
+  <p class="note" style="margin-top:16px">What you'd stop paying for: your Roofr subscription and any other tools Salesforce replaces. We'll fill in that comparison with your current plan details.</p>
+</section>

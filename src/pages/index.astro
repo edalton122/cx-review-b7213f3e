@@ -1,0 +1,43 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Flow from '../components/Flow.astro';
+import MustHaves from '../components/MustHaves.astro';
+import WasteWorksheet from '../components/WasteWorksheet.astro';
+import CostTable from '../components/CostTable.astro';
+import RoofrFair from '../components/RoofrFair.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Footer from '../components/Footer.astro';
+import Lightbox from '../components/Lightbox.astro';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Cannon Exteriors Must-Haves</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  </head>
+  <body>
+    <Header />
+    <main class="wrap">
+      <Hero />
+      <Flow />
+      <MustHaves />
+      <WasteWorksheet />
+      <CostTable />
+      <RoofrFair />
+      <NextSteps />
+      <Footer />
+    </main>
+    <Lightbox />
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>

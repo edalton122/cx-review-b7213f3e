@@ -1,0 +1,13 @@
+{
+  "preparedFor": "Cannon Exteriors",
+  "updated": "Fri, Nov 20, 2026",
+  "meetingDate": "Mon, Nov 23",
+  "meetingTime": "2:00 PM ET",
+  "statuses": [
+    { "key": "native", "label": "Native", "meaning": "Works out of the box" },
+    { "key": "config", "label": "Configured", "meaning": "Set up, no custom code" },
+    { "key": "build", "label": "Partner build", "meaning": "Strong CRM builds it" },
+    { "key": "confirm", "label": "Confirming", "meaning": "Answer due Monday" },
+    { "key": "gap", "label": "Gap", "meaning": "Not covered yet" }
+  ]
+}

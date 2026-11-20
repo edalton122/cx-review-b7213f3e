@@ -1,0 +1,50 @@
+---
+import waste from '../data/waste.json';
+import { calcLine, pluralizeUnit } from '../lib/waste';
+
+const defaultComplexity = waste.complexity.find((c) => (c as any).default)?.value ?? 0;
+const fmt = (n: number) => (Math.round(n * 10) / 10).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const rows = waste.lines.map((l) => ({ ...l, r: calcLine(l, defaultComplexity) }));
+---
+<section id="waste">
+  <div class="sec-head">
+    <p class="eyebrow">Try it</p>
+    <h2>Waste worksheet</h2>
+    <p class="muted">This is how quote lines will calculate. Change any waste % or the roof complexity, and the order quantities update. The measurements and coverages are example values; your real ones would come from QuickMeasure and your product catalog.</p>
+  </div>
+  <div class="ws">
+    <div class="ws-controls">
+      <label for="complexity">Roof complexity
+        <select id="complexity">
+          {waste.complexity.map((c) => <option value={c.value} selected={c.value === defaultComplexity}>{c.label}</option>)}
+        </select>
+      </label>
+      <span class="muted" style="font-size:13px">Example job: {waste.job.squares} squares, predominant pitch {waste.job.pitch}</span>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr><th>Material</th><th class="num">Measured</th><th class="num">Waste %</th><th class="num">Total waste</th><th class="num">With waste</th><th>Coverage</th><th class="num">Order</th></tr>
+        </thead>
+        <tbody id="wsBody">
+          {rows.map((l) => (
+            <tr data-line={l.id}>
+              <td>{l.name}</td>
+              <td class="num">{l.measured} {l.mu}</td>
+              <td class="num">
+                <label class="sr-only" for={`w-${l.id}`}>Waste % for {l.name}</label>
+                <input type="number" id={`w-${l.id}`} min="0" max="40" step="1" value={l.waste} />
+              </td>
+              <td class="num" data-cell="total">{l.r.totalWastePct}%</td>
+              <td class="num" data-cell="with">{fmt(l.r.withWaste)} {l.mu}</td>
+              <td class="muted">{l.coverageLabel}</td>
+              <td class="num qty" data-cell="order">{l.r.order} {pluralizeUnit(l.unit, l.r.order)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="ws-foot">Order = measured × (1 + waste % + complexity) ÷ coverage, rounded up. In Salesforce each line's waste starts at the product's default, and reps can change it.</p>
+  </div>
+  <script type="application/json" id="waste-data" set:html={JSON.stringify(waste.lines)} />
+</section>

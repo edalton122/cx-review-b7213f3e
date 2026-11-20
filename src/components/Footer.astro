@@ -1,0 +1,31 @@
+---
+const sources = [
+  ['Roofr pricing', 'https://roofr.com/pricing'],
+  ['Roofr proposal customization', 'https://help.roofr.com/en/articles/15589052-how-to-customize-your-roofr-proposal'],
+  ['Roofr proposal creation', 'https://help.roofr.com/en/articles/15525824-how-to-create-a-roofr-proposal'],
+  ['Roofr catalog (per-item waste)', 'https://help.roofr.com/en/articles/15533141-how-to-create-a-roofr-catalog'],
+  ['Roofr Zapier guide', 'https://help.roofr.com/en/articles/15604925-roofr-x-zapier-connection-guide'],
+  ['Roofr QuickBooks Online', 'https://help.roofr.com/en/articles/15601898-how-to-connect-roofr-with-quickbooks-online'],
+  ['Roofr release notes', 'https://roofr.com/release-notes'],
+  ['Roofr supplier integrations', 'https://help.roofr.com/en/articles/15591218-supplier-integrations-faq'],
+  ['GAF QuickMeasure', 'https://www.gaf.com/en-us/resources/business-services/quickmeasure'],
+  ['Salesforce quote template limits', 'https://help.salesforce.com/s/articleView?id=sales.quotes_limitations.htm'],
+  ['Salesforce Document Generation', 'https://help.salesforce.com/s/articleView?id=ind.sf_docgen_metered_addon_license.htm'],
+  ['Field Service mobile data capture', 'https://help.salesforce.com/s/articleView?id=service.mfs_data_capture_about.htm'],
+  ['Field Service pricing', 'https://www.salesforce.com/service/field-service-management/pricing/'],
+  ['Appiphony eSign Connect', 'https://appiphony.com/esign-connect/pricing'],
+  ['DocuSign for Salesforce', 'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N30000001taX4EAI&tab=p'],
+  ['DocuSign envelope statuses', 'https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/envelopes/status-codes'],
+];
+---
+<footer id="footer">
+  <div class="sources">
+    <p>Roofr details come from Roofr's public pricing page, help center and release notes as of Nov 20, 2026, and may change. Salesforce, DocuSign, Appiphony and GAF details come from their public documentation and pricing pages. Final pricing and terms are subject to Salesforce approval.</p>
+    <p>
+      Sources:
+      {sources.map(([label, href], i) => (
+        <>{i > 0 && ' · '}<a href={href} target="_blank" rel="noopener noreferrer">{label}</a></>
+      ))}
+    </p>
+  </div>
+</footer>

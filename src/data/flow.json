@@ -1,0 +1,20 @@
+{
+  "roofr": [
+    { "title": "Order a measurement report", "detail": "Roofr report, or a GAF QuickMeasure ordered separately", "tag": "order" },
+    { "title": "Type in third-party measurements", "detail": "Roofr can't import other measurement reports, so a QuickMeasure is keyed in by hand", "tag": "hand" },
+    { "title": "Build the proposal from your catalog", "detail": "Quantities fill from the measurements, with waste set on each line", "tag": "auto" },
+    { "title": "Send, track and sign in Roofr", "detail": "\"Viewed\" status, then e-signature", "tag": "auto" },
+    { "title": "Re-enter the won job in your CRM", "detail": "Roofr's Zapier link only sends data out, and Roofr doesn't integrate into outside CRMs", "tag": "hand" },
+    { "title": "Hand off to production", "detail": "Material and work orders in Roofr; scheduling and crews elsewhere", "tag": "hand" },
+    { "title": "Invoice in QuickBooks", "detail": "Roofr's QuickBooks sync is a beta on the Scale plan: one-way, with manual exports", "tag": "hand" }
+  ],
+  "sf": [
+    { "title": "Order a GAF QuickMeasure", "detail": "A Salesforce email address is set as the report's delivery address", "tag": "order" },
+    { "title": "Report is read automatically", "detail": "The XML file is parsed and the measurements land on the opportunity", "tag": "auto" },
+    { "title": "Quote lines build themselves", "detail": "Each material gets its own waste %, rounded up to whole bundles, rolls and pieces", "tag": "auto" },
+    { "title": "Rep reviews options and photos", "detail": "Adjust waste, add photos, then pick the template", "tag": "review" },
+    { "title": "Send for e-signature", "detail": "Sent, viewed and signed statuses show on the opportunity", "tag": "auto" },
+    { "title": "Signed quote starts the job", "detail": "Work order, material list and crew schedule, all in the same record", "tag": "auto" },
+    { "title": "Invoice goes to QuickBooks", "detail": "Optional Strong CRM integration (about 20 hours)", "tag": "auto" }
+  ]
+}

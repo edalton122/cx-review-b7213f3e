@@ -1,0 +1,151 @@
+[
+  {
+    "id": "measurements",
+    "title": "Measurements flow into the quote",
+    "why": "No retyping a measurement report into a proposal.",
+    "status": "build",
+    "today": [
+      "Roofr's own reports feed proposals directly",
+      "Third-party reports like GAF QuickMeasure can't be imported; area and edge lengths are typed in by hand"
+    ],
+    "salesforce": [
+      "QuickMeasure provides PDF, XML and DXF files",
+      "Strong CRM parses the XML: area, pitch, ridges, hips, valleys, eaves, rakes and flashing",
+      "The report arrives by email to Salesforce, or a rep uploads it, and quote lines build automatically"
+    ],
+    "cost": "20 hours, replacing the Roofr integration line in the SOW (no net change)",
+    "note": { "kind": "Confirming", "text": "GAF doesn't publish its XML layout, so Strong CRM will test the parser on one of your real reports." }
+  },
+  {
+    "id": "waste",
+    "title": "Waste per line item, adjusted for pitch and complexity",
+    "why": "Different waste for shingles, underlayment, ridge cap and the rest, not one blanket %.",
+    "status": "config",
+    "today": [
+      "Each catalog item has a default waste %",
+      "Proposals have a waste column on every line, and the report's recommended waste can be applied to it",
+      "No documented rules for adjusting waste by pitch or complexity"
+    ],
+    "salesforce": [
+      "Each product carries a default waste % and a coverage per unit",
+      "Reps can override the waste % on any line",
+      "A complexity rule adds waste on steep or cut-up roofs; QuickMeasure's suggested waste can pre-fill the lines",
+      "Quantities round up to whole bundles, rolls and pieces"
+    ],
+    "cost": "Fields and a Flow in the base build",
+    "note": { "kind": "Try it", "text": "The waste worksheet below works the way the quote will. Confirming: Strong CRM's hours for this.", "link": "#waste" }
+  },
+  {
+    "id": "proposal",
+    "title": "A proposal that looks like Cannon",
+    "why": "Branding, job photos, good/better/best options, clean line items.",
+    "status": "confirm",
+    "today": [
+      "Unlimited templates with cover pages, logo, photos (including CompanyCam), PDFs and text pages",
+      "Several options for the homeowner to choose from, plus upgrades",
+      "Line items can be hidden from the homeowner and still count in totals"
+    ],
+    "salesforce": [
+      "Standard quote templates cover logo, layout, line items, pricing and a signature block",
+      "Standard templates don't handle job-specific photos or sections that change by option",
+      "For those: Salesforce Document Generation (templates built in Word with images and conditional sections), or Strong CRM's Advanced PDFs"
+    ],
+    "cost": "Included, or the Advanced PDFs add-on",
+    "note": { "kind": "Confirming", "text": "Whether Document Generation is included with your licenses, which would make Advanced PDFs unnecessary, and how many photos fit on a page." },
+    "shots": [
+      { "src": "roofr-proposal-editor.png", "side": "roofr", "caption": "Roofr proposal editor with dynamic fields (generic example from Roofr's help center; Cannon's own screenshot replaces it)" }
+    ]
+  },
+  {
+    "id": "tracking",
+    "title": "Know when a homeowner opens the proposal",
+    "why": "Open and view notifications so reps follow up at the right moment.",
+    "status": "config",
+    "today": [
+      "\"Viewed\" status when the homeowner opens it (added June 2026)",
+      "Time-stamped status history on the job card",
+      "Click or time-on-page tracking isn't documented"
+    ],
+    "salesforce": [
+      "The e-signature tool writes sent, viewed and signed statuses back to the opportunity",
+      "A Flow alerts the rep the moment a proposal is viewed",
+      "Salesforce email open tracking can also be turned on"
+    ],
+    "cost": "Included with the e-signature tool",
+    "note": { "kind": "Confirming", "text": "The exact statuses the chosen e-signature tool reports." }
+  },
+  {
+    "id": "esign",
+    "title": "E-signature",
+    "why": "Sign on the spot or from a link, without extra friction.",
+    "status": "confirm",
+    "today": [
+      "Built in, with unlimited signatures on Essentials and Scale at no extra charge",
+      "Sign on the device or by email or text link",
+      "Supports co-signers"
+    ],
+    "salesforce": [
+      "Option A: DocuSign eSignature for Salesforce (listed from $30 per user per month)",
+      "Option B: Appiphony eSign Connect ($12 per user per month, billed annually), which still needs a DocuSign account",
+      "Option C: on-site signature in the Field Service mobile app, using licenses you already have (to be confirmed for quotes)"
+    ],
+    "cost": "New compared with Roofr; depends on how many people send proposals",
+    "note": { "kind": "Confirming", "text": "The all-in yearly cost of each option for your sending volume." }
+  },
+  {
+    "id": "quickbooks",
+    "title": "QuickBooks",
+    "why": "Signed jobs become invoices without re-keying.",
+    "status": "build",
+    "today": [
+      "QuickBooks Online sync is a beta, on the Scale plan only",
+      "One-way, exported by hand, one company file"
+    ],
+    "salesforce": [
+      "Strong CRM connects QuickBooks directly or through Zapier",
+      "Customers, jobs and invoices stay in sync with the opportunity"
+    ],
+    "cost": "About 20 hours (optional)",
+    "note": { "kind": "Confirming", "text": "QuickBooks Online or Desktop, and what triggers an invoice (deposit, milestone or completion)." }
+  },
+  {
+    "id": "field",
+    "title": "Production and crews on their phones",
+    "why": "Your team's day gets easier once a job is sold.",
+    "status": "native",
+    "today": [
+      "Work orders can go to crews by email or text",
+      "Crew management and calendar events are on the Scale plan"
+    ],
+    "salesforce": [
+      "Field Service mobile works offline, with required checklists and photos",
+      "Signatures are captured on the service report",
+      "Subcontractors use Technician licenses: work orders, checklists and photos only",
+      "Sales and production live on the same job record"
+    ],
+    "cost": "Included in your licenses",
+    "note": { "kind": "", "text": "Shown in the Nov 13 demo; a recording is available." }
+  },
+  {
+    "id": "suppliers",
+    "title": "Ordering materials from suppliers",
+    "why": "Only matters if your team orders through Roofr today.",
+    "status": "gap",
+    "today": ["Direct ordering and live pricing with ABC Supply, SRS and QXO"],
+    "salesforce": [
+      "No built-in supplier connection",
+      "The material list on the work order can be emailed to your supplier rep automatically",
+      "A direct supplier connection would be a custom build"
+    ],
+    "cost": "Email handoff is in scope; a direct connection would be quoted separately",
+    "note": { "kind": "Question for you", "text": "Do you place supplier orders through Roofr today?" }
+  },
+  {
+    "id": "your-list",
+    "placeholder": true,
+    "title": "Your must-haves",
+    "why": "Each item from your list gets its own card here, in your words, with a status and a cost.",
+    "status": "confirm",
+    "pillLabel": "Waiting on your list"
+  }
+]

@@ -1,0 +1,26 @@
+---
+const strong = [
+  'Inexpensive, fast measurement reports that flow straight into proposals',
+  'Polished proposals with options, upgrades and minimum-profit limits',
+  'Unlimited e-signatures included on paid plans',
+  'Direct ordering with ABC Supply, SRS and QXO',
+  'No per-user fees',
+];
+const stops = [
+  'No public API for connecting other systems',
+  'Zapier only sends data out of Roofr, never in',
+  "Roofr says it doesn't integrate its tools into outside CRMs",
+  "Can't import other measurement reports, including QuickMeasure",
+  'QuickBooks sync is a one-way beta on the top plan',
+];
+---
+<section id="roofr">
+  <div class="sec-head">
+    <p class="eyebrow">A fair comparison</p>
+    <h2>What Roofr does well, and where it stops</h2>
+  </div>
+  <div class="duo">
+    <div class="panel"><h3>Where Roofr is strong</h3><ul>{strong.map((s) => <li>{s}</li>)}</ul></div>
+    <div class="panel"><h3>Why it can't be your hub</h3><ul>{stops.map((s) => <li>{s}</li>)}</ul></div>
+  </div>
+</section>
