@@ -24,7 +24,7 @@ npm run build
 
 This is a draft. Nothing is published. GitHub Pages is public even for a private repo (unless the org has Enterprise Cloud private Pages). If it is published on public Pages, use an unguessable repo name. `noindex` and `robots.txt` hide it from search engines, but they are not access control, and the pricing is visible in the repo source. Get the account team's approval first.
 
-Deploys through `.github/workflows/deploy.yml` on push to `main`.
+Publish with `scripts/publish.sh`. It runs the tests, builds with the right base path, leaves out the `roofr-*` screenshots, and pushes `dist/` to the `gh-pages` branch. In the repo's Pages settings, set the source to the `gh-pages` branch. (A GitHub Actions workflow would also work, but pushing workflow files needs a token with the `workflow` scope.)
 
 ## Do not commit
 
