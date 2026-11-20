@@ -1,0 +1,51 @@
+---
+import cost from '../../data/cost.json';
+import StatusPill from '../StatusPill.astro';
+
+const groups = [
+  { label: 'Licenses, locked for 3 years', rows: cost.rows.slice(0, 2) },
+  { label: 'One-time', rows: cost.rows.slice(2, 5) },
+  { label: 'Still confirming', rows: cost.rows.filter((r) => r.status === 'confirm') },
+  { label: 'Pay as you go', rows: cost.rows.slice(7) },
+];
+const confirming = cost.rows.filter((r) => r.status === 'confirm').length;
+---
+<div class="cost-top">
+  <div class="kpi dark">
+    <p class="v">{cost.total.yearly}</p>
+    <p class="l">Licenses per year</p>
+    <p class="s">7 Field Service Core and 4 Technician licenses</p>
+  </div>
+  <div class="kpi">
+    <p class="v">$59,976</p>
+    <p class="l">Over the 3-year term</p>
+    <p class="s">Price locked for the full term</p>
+  </div>
+  <div class="kpi">
+    <p class="v">{confirming}</p>
+    <p class="l">Lines still confirming</p>
+    <p class="s">Advanced PDFs and e-signature, due Monday</p>
+  </div>
+</div>
+<div class="cost-rows">
+  {groups.map((g) => (
+    <>
+      <div class="cost-row group"><span>{g.label}</span></div>
+      {g.rows.map((r) => (
+        <div class="cost-row">
+          <span class="item">{r.item}</span>
+          <StatusPill status={r.status} label={r.pill} />
+          <span class="amt">{r.yearly}</span>
+          <span class="note">{r.note}</span>
+        </div>
+      ))}
+    </>
+  ))}
+</div>
+<div class="today-box">
+  <span class="ic">$</span>
+  <div>
+    <h3>What you'd stop paying</h3>
+    <p>Send us what you spend today on Roofr and the tools around it, and we'll put the two totals side by side here.</p>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+---
+import flow from '../../data/flow.json';
+import StatusPill from '../StatusPill.astro';
+
+const tagLabel: Record<string, string> = { hand: 'By hand', auto: 'Automatic', review: 'Review', order: 'Order' };
+const byHand = (steps: { tag: string }[]) => steps.filter((s) => s.tag === 'hand').length;
+const related = [
+  {
+    title: 'QuickBooks',
+    status: 'build',
+    label: 'Optional build',
+    text: 'Strong CRM connects QuickBooks directly or through Zapier, so customers, jobs and invoices stay in sync with the job. Today, Roofr\'s QuickBooks Online sync is a one-way beta on the Scale plan.',
+    cost: 'About 20 hours, one-time. To confirm: QuickBooks Online or Desktop, and what triggers an invoice.',
+  },
+  {
+    title: 'Ordering from suppliers',
+    status: 'gap',
+    label: 'Gap',
+    text: 'Roofr orders directly from ABC Supply, SRS and QXO. Salesforce has no built-in supplier connection; the material list can be emailed to your supplier rep automatically.',
+    cost: 'Email handoff is in scope. A direct connection would be quoted separately. Question for you: do you order through Roofr today?',
+  },
+];
+---
+<div class="sec-head">
+  <p class="eyebrow">The whole flow</p>
+  <h2>The same job, start to finish</h2>
+  <p class="sub">Every step from the measurement report to the invoice. The red steps are where someone retypes information today.</p>
+</div>
+<div class="lanes">
+  <div class="lane roofr">
+    <div class="lane-head"><h3>Roofr today</h3><span class="count">{byHand(flow.roofr)} steps by hand</span></div>
+    <ol>
+      {flow.roofr.map((s) => (
+        <li class={s.tag}>
+          <div><p class="t">{s.title}</p><p class="x">{s.detail}</p></div>
+          <span class={`ltag ${s.tag}`}>{tagLabel[s.tag]}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+  <div class="lane sf">
+    <div class="lane-head"><h3>Cannon on Salesforce</h3><span class="count">{byHand(flow.sf)} steps by hand</span></div>
+    <ol>
+      {flow.sf.map((s) => (
+        <li>
+          <div><p class="t">{s.title}</p><p class="x">{s.detail}</p></div>
+          <span class={`ltag ${s.tag}`}>{tagLabel[s.tag]}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</div>
+<div class="related">
+  {related.map((r) => (
+    <div class="rel">
+      <div class="row"><h4>{r.title}</h4><StatusPill status={r.status} label={r.label} /></div>
+      <p>{r.text}</p>
+      <p class="c">{r.cost}</p>
+    </div>
+  ))}
+</div>

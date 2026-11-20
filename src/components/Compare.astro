@@ -1,0 +1,59 @@
+---
+import Shot from './Shot.astro';
+import { shotUrl } from '../lib/assets';
+
+interface Side {
+  shot?: string;
+  caption: string;
+  points: string[];
+  extra?: { shot: string; caption: string };
+}
+interface Props {
+  roofr: Side;
+  sf: Side;
+  doc?: boolean;
+}
+const { roofr, sf, doc = false } = Astro.props;
+const hasRoofr = Boolean(shotUrl(roofr.shot));
+---
+<div class="compare-head">
+  <div>
+    <p class="eyebrow">Side by side</p>
+    <h2>Roofr today, and the same step in Salesforce</h2>
+  </div>
+  <div class="seg" role="group" aria-label="Screenshot layout">
+    <button type="button" data-view="both" aria-pressed="true">Side by side</button>
+    <button type="button" data-view="roofr" aria-pressed="false">Roofr only</button>
+    <button type="button" data-view="sf" aria-pressed="false">Salesforce only</button>
+  </div>
+</div>
+<div class="compare" data-view="both">
+  <div class="side roofr">
+    <div class="side-label">
+      <span class="tag"><i>R</i>Roofr today</span>
+      <span class="hint">{hasRoofr ? 'Generic example' : 'Your screen goes here'}</span>
+    </div>
+    {hasRoofr ? (
+      <Shot file={roofr.shot} caption={roofr.caption} address="Roofr" />
+    ) : (
+      <div class="placeholder">
+        <span class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2" /><path d="M3 8h18M8 21h8M12 18v3" /></svg>
+        </span>
+        <strong>Your Roofr screen goes here</strong>
+        <p>Send us a screenshot of this step as your team does it today, and it replaces this panel.</p>
+      </div>
+    )}
+    {roofr.extra && hasRoofr && <div class="sub-shot"><Shot file={roofr.extra.shot} caption={roofr.extra.caption} address="Roofr" /></div>}
+    <ul class="points">{roofr.points.map((p) => <li>{p}</li>)}</ul>
+  </div>
+  <div class="side sf">
+    <div class="side-label">
+      <span class="tag"><i>SF</i>Cannon on Salesforce</span>
+      <span class="hint">Live in the Cannon demo org</span>
+    </div>
+    <Shot file={sf.shot} caption={sf.caption} address="Salesforce · Cannon demo org" doc={doc} />
+    <ul class="points">{sf.points.map((p) => <li>{p}</li>)}</ul>
+    {sf.extra && <div class="sub-shot"><Shot file={sf.extra.shot} caption={sf.extra.caption} address="Salesforce · Cannon demo org" /></div>}
+  </div>
+</div>

@@ -1,0 +1,66 @@
+---
+type Cell = [v: 'yes' | 'no' | 'maybe', t: string];
+const options: { letter: string; name: string; price: string; unit: string; rows: [string, Cell][]; best: string; flag?: string; hl?: boolean }[] = [
+  {
+    letter: 'Option A',
+    name: 'DocuSign for Salesforce',
+    price: 'From $30',
+    unit: 'per user / month',
+    rows: [
+      ['Sign by email link', ['yes', 'Yes']],
+      ['Sign in person', ['yes', 'Yes']],
+      ['Status back to the quote', ['yes', 'Yes']],
+    ],
+    best: 'The most complete option, priced per sender.',
+  },
+  {
+    letter: 'Option B',
+    name: 'Appiphony eSign Connect',
+    price: '$12',
+    unit: 'per user / month, billed yearly',
+    rows: [
+      ['Sign by email link', ['yes', 'Yes']],
+      ['Sign in person', ['maybe', 'Confirming']],
+      ['Status back to the quote', ['yes', 'Yes']],
+    ],
+    best: 'A lower per-user price, but it still needs a DocuSign account behind it.',
+  },
+  {
+    letter: 'Option C',
+    name: 'On-site signature in Salesforce',
+    price: '$0',
+    unit: 'uses licenses you already have',
+    rows: [
+      ['Sign by email link', ['no', 'No']],
+      ['Sign in person', ['yes', 'Yes, as in the demo']],
+      ['Status back to the quote', ['yes', 'Saved on the job']],
+    ],
+    best: 'For jobs signed at the kitchen table. Can be combined with A or B for emailed proposals.',
+    flag: 'No added cost',
+    hl: true,
+  },
+];
+---
+<div class="sec-head">
+  <p class="eyebrow">Your options</p>
+  <h2>Three ways to collect signatures</h2>
+  <p class="sub">Strong CRM is pricing each one at your sending volume, so you can compare the yearly total with what Roofr includes today.</p>
+</div>
+<div class="opts">
+  {options.map((o) => (
+    <article class:list={['opt', { hl: o.hl }]}>
+      <div class="hd">
+        <p class="letter">{o.letter}</p>
+        <h3>{o.name}</h3>
+        <p class="price">{o.price}<small>{o.unit}</small></p>
+        {o.flag && <span class="flag">{o.flag}</span>}
+      </div>
+      <dl>
+        {o.rows.map(([k, [v, t]]) => (
+          <div><dt>{k}</dt><dd><span class={v}>{t}</span></dd></div>
+        ))}
+      </dl>
+      <p class="best">{o.best}</p>
+    </article>
+  ))}
+</div>

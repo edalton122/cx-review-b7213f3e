@@ -1,9 +1,15 @@
 ---
+import { brandUrl } from '../lib/assets';
+
+const logo = brandUrl('cannon-gold.png');
 const sources = [
   ['Roofr pricing', 'https://roofr.com/pricing'],
   ['Roofr proposal customization', 'https://help.roofr.com/en/articles/15589052-how-to-customize-your-roofr-proposal'],
   ['Roofr proposal creation', 'https://help.roofr.com/en/articles/15525824-how-to-create-a-roofr-proposal'],
   ['Roofr catalog (per-item waste)', 'https://help.roofr.com/en/articles/15533141-how-to-create-a-roofr-catalog'],
+  ['Roofr automations', 'https://help.roofr.com/en/articles/15620961-how-to-manage-roofr-automations'],
+  ['Roofr job cards', 'https://help.roofr.com/en/articles/15605891-how-to-manage-roofr-job-cards'],
+  ['Roofr material orders', 'https://help.roofr.com/en/articles/15634349-how-to-create-a-material-order'],
   ['Roofr Zapier guide', 'https://help.roofr.com/en/articles/15604925-roofr-x-zapier-connection-guide'],
   ['Roofr QuickBooks Online', 'https://help.roofr.com/en/articles/15601898-how-to-connect-roofr-with-quickbooks-online'],
   ['Roofr release notes', 'https://roofr.com/release-notes'],
@@ -18,14 +24,20 @@ const sources = [
   ['DocuSign envelope statuses', 'https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/envelopes/status-codes'],
 ];
 ---
-<footer id="footer">
-  <div class="sources">
-    <p>Roofr details come from Roofr's public pricing page, help center and release notes as of Nov 20, 2026, and may change. Salesforce, DocuSign, Appiphony and GAF details come from their public documentation and pricing pages. Final pricing and terms are subject to Salesforce approval.</p>
-    <p>
-      Sources:
-      {sources.map(([label, href], i) => (
-        <>{i > 0 && ' · '}<a href={href} target="_blank" rel="noopener noreferrer">{label}</a></>
-      ))}
-    </p>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="row">
+      {logo && <img src={logo} alt="Cannon Exteriors" width="86" height="34" />}
+      <span>Prepared for Cannon Exteriors by Salesforce and Strong CRM</span>
+    </div>
+    <details>
+      <summary>Sources and notes</summary>
+      <p>Roofr details come from Roofr's public pricing page, help center and release notes as of Nov 20, 2026, and may change. Roofr screenshots are generic examples from Roofr's help center until Cannon's own replace them. Salesforce screenshots come from a demo org set up for Cannon; the homeowners in it are sample data. Final pricing and terms are subject to Salesforce approval.</p>
+      <p>
+        {sources.map(([label, url], i) => (
+          <>{i > 0 && ' · '}<a href={url} target="_blank" rel="noopener noreferrer">{label}</a></>
+        ))}
+      </p>
+    </details>
   </div>
 </footer>

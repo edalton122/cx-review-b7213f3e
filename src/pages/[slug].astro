@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import StatusPill from '../components/StatusPill.astro';
+import Compare from '../components/Compare.astro';
+import FlowModule from '../components/modules/FlowModule.astro';
+import WasteModule from '../components/modules/WasteModule.astro';
+import ProposalModule from '../components/modules/ProposalModule.astro';
+import TrackingModule from '../components/modules/TrackingModule.astro';
+import EsignModule from '../components/modules/EsignModule.astro';
+import CostModule from '../components/modules/CostModule.astro';
+import TeamModule from '../components/modules/TeamModule.astro';
+import concerns from '../data/concerns.json';
+import { href, photoUrl } from '../lib/assets';
+
+export function getStaticPaths() {
+  return concerns.map((c, i) => ({ params: { slug: c.slug }, props: { index: i } }));
+}
+
+const { index } = Astro.props as { index: number };
+type Concern = (typeof concerns)[number] & {
+  roofr?: { shot?: string; caption: string; points: string[]; extra?: { shot: string; caption: string } };
+  sf?: { shot?: string; caption: string; points: string[]; extra?: { shot: string; caption: string } };
+};
+const c = concerns[index] as Concern;
+const n = String(index + 1).padStart(2, '0');
+const prev = index > 0 ? concerns[index - 1] : null;
+const next = index < concerns.length - 1 ? concerns[index + 1] : null;
+const bg = photoUrl(c.photo);
+const modules: Record<string, any> = {
+  flow: FlowModule,
+  waste: WasteModule,
+  proposal: ProposalModule,
+  tracking: TrackingModule,
+  esign: EsignModule,
+  cost: CostModule,
+  team: TeamModule,
+};
+const Module = modules[c.module];
+---
+<Base title={c.nav} current={c.slug}>
+  <section class="c-hero">
+    {bg && <div class="bg" style={`background-image:url('${bg}')`}></div>}
+    <div class="wrap inner">
+      <div>
+        <div class="count"><span class="big">{n}</span><span class="of">Concern {index + 1} of {concerns.length}</span></div>
+        <h1>{c.title}</h1>
+        <div class="worry">
+          <p class="k">What you asked</p>
+          <p>{c.concern}</p>
+        </div>
+      </div>
+      <div class="answer-card">
+        <div class="top"></div>
+        <div class="in">
+          <div class="row">
+            <span class="k">Our answer</span>
+            <StatusPill status={c.status} />
+          </div>
+          <p class="ans">{c.answer}</p>
+          <p class="sn">{c.statusNote}</p>
+          <dl>
+            <div><dt>Cost</dt><dd>{c.cost}</dd></div>
+            <div><dt>Still to confirm</dt><dd>{c.confirm}</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {c.roofr && c.sf && (
+    <section class="section">
+      <div class="wrap wide">
+        <Compare roofr={c.roofr} sf={c.sf} doc={c.module === 'proposal'} />
+      </div>
+    </section>
+  )}
+
+  <section class:list={['section', { module: Boolean(c.roofr) }]}>
+    <div class="wrap">
+      <Module />
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="wrap pn">
+      {prev ? (
+        <a href={href(`${prev.slug}/`)}><span class="k">← Concern {index}</span><span class="t">{prev.nav}</span></a>
+      ) : (
+        <a href={href()}><span class="k">← Back to</span><span class="t">Overview</span></a>
+      )}
+      {next ? (
+        <a class="next" href={href(`${next.slug}/`)}><span class="k">Concern {index + 2} →</span><span class="t">{next.nav}</span></a>
+      ) : (
+        <a class="next" href={href('#next')}><span class="k">Wrap up →</span><span class="t">Next steps</span></a>
+      )}
+    </div>
+  </section>
+</Base>

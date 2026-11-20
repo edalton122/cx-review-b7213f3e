@@ -6,7 +6,7 @@
     { "item": "QuickMeasure automation", "status": "build", "pill": "Swap", "yearly": "$0 change", "note": "Replaces the Roofr integration line (20 hours)" },
     { "item": "QuickBooks integration", "status": "build", "pill": "Optional", "yearly": "~20 hrs", "note": "One-time; direct or Zapier" },
     { "item": "Advanced PDFs", "status": "confirm", "pill": "Confirming", "yearly": "TBD", "note": "May not be needed if Document Generation is included" },
-    { "item": "E-signature", "status": "confirm", "pill": "Confirming", "yearly": "TBD", "note": "Options A–C above; depends on how many people send" },
+    { "item": "E-signature", "status": "confirm", "pill": "Confirming", "yearly": "TBD", "note": "Options A to C on the E-signature tab; depends on how many people send" },
     { "item": "GAF QuickMeasure reports", "status": "native", "pill": "Per job", "yearly": "$18–$20 each", "note": "Paid to GAF as you order; Master Elite contractors pay $18" }
   ],
   "total": { "label": "Licenses", "yearly": "$19,992", "note": "$59,976 over the 3-year term" }

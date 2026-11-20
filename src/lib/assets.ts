@@ -1,15 +1,19 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+
+/** Site-relative link that respects the GitHub Pages base path. */
+export const href = (p = '') => `${base}${p}`;
 
 function urlIfExists(folder: string, file: string): string | null {
   const onDisk = path.join(process.cwd(), 'public', folder, file);
   return fs.existsSync(onDisk) ? `${base}${folder}/${file}` : null;
 }
 
-/** Returns the URL of a screenshot in public/screenshots, or null if the file isn't there. */
-export const shotUrl = (file: string) => urlIfExists('screenshots', file);
+/** Returns the URL of a screenshot in public/screenshots, or null if the file isn't there (Roofr shots are local-only). */
+export const shotUrl = (file?: string) => (file ? urlIfExists('screenshots', file) : null);
 
-/** Returns the URL of a logo in public/logos, or null so the caller can fall back to text. */
-export const logoUrl = (file: string) => urlIfExists('logos', file);
+export const photoUrl = (file: string) => urlIfExists('photos', file);
+
+export const brandUrl = (file: string) => urlIfExists('brand', file);

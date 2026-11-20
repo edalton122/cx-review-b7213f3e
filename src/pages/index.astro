@@ -1,46 +1,144 @@
 ---
-import '../styles/tokens.css';
-import '../styles/base.css';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import Flow from '../components/Flow.astro';
-import MustHaves from '../components/MustHaves.astro';
-import WasteWorksheet from '../components/WasteWorksheet.astro';
-import Job from '../components/Job.astro';
-import CostTable from '../components/CostTable.astro';
-import RoofrFair from '../components/RoofrFair.astro';
-import NextSteps from '../components/NextSteps.astro';
-import Footer from '../components/Footer.astro';
-import Lightbox from '../components/Lightbox.astro';
+import Base from '../layouts/Base.astro';
+import StatusPill from '../components/StatusPill.astro';
+import concerns from '../data/concerns.json';
+import open from '../data/open-items.json';
+import site from '../data/site.json';
+import { href, photoUrl } from '../lib/assets';
+
+const list = concerns;
+const hero = photoUrl('roof-after.jpg');
+const ready = list.filter((c) => ['native', 'config'].includes(c.status)).length;
+const confirming = list.filter((c) => c.status === 'confirm').length;
+
+const strong = [
+  'Fast, inexpensive measurement reports that flow straight into proposals',
+  'Polished proposals with options, upgrades and minimum-profit limits',
+  'Unlimited e-signatures included on paid plans',
+  'Direct ordering with ABC Supply, SRS and QXO',
+  'No per-user fees',
+];
+const stops = [
+  'No public API for connecting other systems',
+  'Zapier only sends data out of Roofr, never in',
+  "Roofr says it doesn't integrate its tools into outside CRMs",
+  "Can't import other measurement reports, including QuickMeasure",
+  'QuickBooks sync is a one-way beta on the top plan',
+];
+const need = [
+  'Screenshots of the Roofr steps you rely on most',
+  'One QuickMeasure report (the XML file) and the Roofr proposal built from it',
+  'Your waste factors by material, and when you raise them',
+  'What you spend today on Roofr and the tools around it',
+];
+const back = [
+  'Every "Confirming" item answered, with a cost',
+  'Your own Roofr screens in place of the generic ones',
+  'One of your past jobs rebuilt in Salesforce, next to the Roofr proposal',
+  'An updated all-in cost',
+];
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <link rel="icon" href="data:," />
-    <meta name="robots" content="noindex,nofollow" />
-    <title>Cannon Exteriors Must-Haves</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
-  </head>
-  <body>
-    <Header />
-    <main class="wrap">
-      <Hero />
-      <Flow />
-      <MustHaves />
-      <WasteWorksheet />
-      <Job />
-      <CostTable />
-      <RoofrFair />
-      <NextSteps />
-      <Footer />
-    </main>
-    <Lightbox />
-    <script>
-      import '../scripts/main.ts';
-    </script>
-  </body>
-</html>
+<Base title="Your seven concerns, answered" current="">
+  <section class="ov-hero">
+    <div class="wrap inner">
+      <div>
+        <p class="eyebrow">Prepared for {site.preparedFor}</p>
+        <h1>Seven concerns about leaving Roofr. <em>Each one, answered.</em></h1>
+        <p class="lede">Each tab puts a Roofr screen next to the same step in Salesforce, from a demo org built for Cannon. Where something still needs an answer or adds cost, it says so plainly.</p>
+        <div class="ctas">
+          <a class="btn gold" href={href(`${list[0].slug}/`)}>Start with concern 01 →</a>
+          <a class="btn ghost" href={href('waste/')}>Try the waste worksheet</a>
+        </div>
+      </div>
+      <div class="ov-visual" aria-hidden="true">
+        <div class="roofline"></div>
+        {hero && <div class="photo" style={`background-image:url('${hero}')`}></div>}
+        <div class="badge"><b>98</b><span>bundles of shingles for a 28.4-square roof, worked out per line in the demo org</span></div>
+      </div>
+    </div>
+    <div class="stats-band">
+      <div class="wrap ov-stats">
+        <div><p class="v">7</p><p class="l">concerns, each on its own tab</p></div>
+        <div><p class="v">{ready}</p><p class="l">work today, with no custom code</p></div>
+        <div><p class="v">{confirming}</p><p class="l">answers due by our Monday call</p></div>
+        <div><p class="v">$19,992</p><p class="l">a year in licenses, locked for 3 years</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Start anywhere</p>
+        <h2>The seven concerns</h2>
+        <p class="sub">Pick one to see Roofr and Salesforce side by side, what it costs, and what's still being confirmed.</p>
+      </div>
+      <div class="tiles">
+        {list.map((c, i) => {
+          const photo = photoUrl(c.photo);
+          return (
+            <a class="tile" href={href(`${c.slug}/`)}>
+              <div class="thumb">
+                {photo && <img src={photo} alt="" loading="lazy" />}
+                <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <div class="body">
+                <h3>{c.nav}</h3>
+                <p class="ans">{c.short}</p>
+                <div class="foot">
+                  <StatusPill status={c.status} />
+                  <span class="go">See the answer →</span>
+                </div>
+              </div>
+            </a>
+          );
+        })}
+        <a class="tile next-tile" href="#next">
+          <div>
+            <p class="k">Then</p>
+            <h3>One real job, start to finish</h3>
+            <p>Run one of your past jobs through Salesforce and compare it with the Roofr proposal you sent.</p>
+          </div>
+          <span class="go">See next steps →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">A fair comparison</p>
+        <h2>What Roofr does well, and where it stops</h2>
+      </div>
+      <div class="fair">
+        <div class="col strong"><h3>Where Roofr is strong</h3><ul>{strong.map((s) => <li>{s}</li>)}</ul></div>
+        <div class="col stops"><h3>Why it can't run the whole business</h3><ul>{stops.map((s) => <li>{s}</li>)}</ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="next">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Next steps</p>
+        <h2>One real job, start to finish</h2>
+        <p class="sub">The best proof is running one of your past jobs through Salesforce and comparing it with the Roofr proposal you sent.</p>
+      </div>
+      <div class="steps3">
+        <div class="step-card">
+          <div class="who"><span class="dot">1</span><div><h3>From you</h3><p class="when">When you can</p></div></div>
+          <ol>{need.map((s) => <li>{s}</li>)}</ol>
+        </div>
+        <div class="step-card">
+          <div class="who"><span class="dot">2</span><div><h3>From {open.owner}</h3><p class="when">{open.due}</p></div></div>
+          <ol>{open.items.map((s) => <li>{s}</li>)}</ol>
+        </div>
+        <div class="step-card">
+          <div class="who"><span class="dot">3</span><div><h3>What you get back</h3><p class="when">After the call</p></div></div>
+          <ul>{back.map((s) => <li>{s}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

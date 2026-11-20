@@ -1,9 +1,9 @@
 {
   "job": { "squares": 28.4, "pitch": "8/12" },
   "complexity": [
-    { "value": 0, "label": "Simple (+0%)" },
-    { "value": 2, "label": "Moderate, 7/12–9/12 (+2%)", "default": true },
-    { "value": 5, "label": "Steep or cut-up, 10/12+ (+5%)" }
+    { "value": 0, "label": "Simple (+0%)", "name": "Simple", "detail": "Up to 6/12 · +0%" },
+    { "value": 2, "label": "Moderate, 7/12–9/12 (+2%)", "name": "Moderate", "detail": "7/12 to 9/12 · +2%", "default": true },
+    { "value": 5, "label": "Steep or cut-up, 10/12+ (+5%)", "name": "Steep or cut-up", "detail": "10/12 and up · +5%" }
   ],
   "lines": [
     { "id": "shingles", "name": "Architectural shingles", "measured": 28.4, "mu": "sq", "waste": 12, "coverage": 0.3333333333333333, "unit": "bundle", "coverageLabel": "3 bundles / sq" },

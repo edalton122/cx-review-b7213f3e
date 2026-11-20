@@ -1,0 +1,220 @@
+[
+  {
+    "slug": "proposal-to-production",
+    "nav": "Proposal to production",
+    "title": "From the measurement to a scheduled job, without retyping",
+    "concern": "Roofr takes a job from the measurement report to a signed proposal. Will Salesforce keep that flow, or add double entry?",
+    "answer": "It keeps the flow and carries it further. QuickMeasure reports fill the quote automatically, and the signed quote becomes the work order, material order and crew schedule on the same record.",
+    "short": "QuickMeasure fills the quote, and the signed quote starts the job on the same record.",
+    "status": "build",
+    "statusNote": "The QuickMeasure reader is a Strong CRM build",
+    "cost": "QuickMeasure automation is 20 hours. It replaces the Roofr integration line in the SOW, so the total doesn't change.",
+    "confirm": "Strong CRM will test the QuickMeasure reader on one of your real XML files.",
+    "photo": "roof-after.jpg",
+    "roofr": {
+      "shot": "roofr-job-card.png",
+      "caption": "A Roofr job card with proposals, material orders and work orders. Generic example from Roofr's help center; your own screen replaces it.",
+      "points": [
+        "Roofr's own reports flow into proposals. A GAF QuickMeasure can't be imported, so it's typed in by hand",
+        "Won jobs are re-entered in your CRM. Roofr's Zapier link only sends data out",
+        "Scheduling, crews and invoicing happen in other tools"
+      ]
+    },
+    "sf": {
+      "shot": "sf-deal.png",
+      "caption": "The Harper job in the Cannon demo org: pipeline, insurance claim, contract, materials and job status on one record.",
+      "points": [
+        "The QuickMeasure report is emailed to Salesforce and read automatically: area, pitch, ridges, hips, valleys, eaves, rakes",
+        "Quote lines build from those measurements, with waste set per material",
+        "The signed quote creates the work order, material list and crew schedule",
+        "Sales, production and crews all work from that one job record"
+      ]
+    },
+    "module": "flow"
+  },
+  {
+    "slug": "waste",
+    "nav": "Waste calculation",
+    "title": "Waste set per material, adjusted for pitch and complexity",
+    "concern": "Roofr applies waste on every proposal line. Can Salesforce set waste per material, and adjust it for steep or cut-up roofs?",
+    "answer": "Yes, and it's already running in our demo org. Each material has its own waste %, a complexity adder covers steep or cut-up roofs, and order quantities round up to whole bundles, rolls and pieces.",
+    "short": "Waste % per material plus a complexity adder, rounded up to whole bundles. Running in the demo org now.",
+    "status": "config",
+    "statusNote": "Built with fields and a Flow, no custom code",
+    "cost": "Fields and a Flow in the base build.",
+    "confirm": "Strong CRM's hours for building the waste Flow.",
+    "photo": "tearoff.jpg",
+    "roofr": {
+      "shot": "roofr-material-order.png",
+      "caption": "A Roofr material order built from a proposal. Generic example from Roofr's help center; your own screen replaces it.",
+      "points": [
+        "Each catalog item has a default waste %",
+        "Every proposal line has a waste column, and the report's recommended waste can be applied",
+        "No documented rule for raising waste by pitch or complexity"
+      ]
+    },
+    "sf": {
+      "shot": "sf-waste-lines.png",
+      "caption": "Quote lines in the Cannon demo org for a 28.4-square, 8/12 roof. Each line shows the measured quantity, its waste % and the order quantity, which a Flow sets automatically.",
+      "points": [
+        "Each product carries a default waste % and its coverage per bundle, roll or piece",
+        "Reps can change the waste % on any line, and the quantity updates",
+        "A complexity setting on the quote adds waste for steep or cut-up roofs",
+        "Quantities always round up, so you never order a partial bundle"
+      ]
+    },
+    "module": "waste"
+  },
+  {
+    "slug": "proposal",
+    "nav": "Proposal quality",
+    "title": "Proposals that look like Cannon",
+    "concern": "Roofr proposals look professional, with branding, photos and good, better and best options. Will Salesforce proposals measure up without paying extra for Advanced PDFs?",
+    "answer": "The standard template covers your logo, colors, line items, totals and signature block at no extra cost. Job photos and good, better and best on one document need Document Generation or Advanced PDFs. We're confirming whether Document Generation is already included in your licenses.",
+    "short": "Logo, line items and signature are included. Photos and options on one document may need an add-on.",
+    "status": "confirm",
+    "statusNote": "Answer due Monday",
+    "cost": "Included with the standard template, or the Advanced PDFs add-on if Document Generation isn't included.",
+    "confirm": "Whether Document Generation is included with your licenses, and how many photos fit on a proposal page.",
+    "photo": "siding-after.jpg",
+    "roofr": {
+      "shot": "roofr-options.png",
+      "caption": "Good, better and best options with upgrades on a Roofr proposal. Generic example from Roofr's help center; your own proposal replaces it.",
+      "extra": {
+        "shot": "roofr-proposal-editor.png",
+        "caption": "Roofr's proposal editor with dynamic fields. Generic example from Roofr's help center."
+      },
+      "points": [
+        "Unlimited templates with cover pages, logo, photos (including CompanyCam), PDFs and text pages",
+        "Several options for the homeowner to choose from, plus upgrades",
+        "Line items can be hidden from the homeowner and still count in the total"
+      ]
+    },
+    "sf": {
+      "shot": "sf-quote-pdf.png",
+      "caption": "A sample proposal PDF saved on the quote in the Cannon demo org. It was generated for this preview; the standard Quote Template looks similar.",
+      "points": [
+        "The standard quote template covers logo, layout, line items, pricing and a signature block",
+        "It doesn't handle job-specific photos or sections that change by option",
+        "For those: Salesforce Document Generation (Word templates with images and conditional sections), or Strong CRM's Advanced PDFs"
+      ]
+    },
+    "module": "proposal"
+  },
+  {
+    "slug": "tracking",
+    "nav": "Proposal tracking",
+    "title": "Know the moment a homeowner opens the proposal",
+    "concern": "Roofr shows when a proposal has been viewed. Will we still know when it's opened, clicked or viewed?",
+    "answer": "Yes for sent, viewed and signed. The e-signature tool writes each status and its time back to the quote, and a Flow alerts the rep the moment it's viewed. Neither Roofr nor the e-signature tools document link-click tracking.",
+    "short": "Sent, viewed and signed land on the quote with the time, and the rep is alerted on view.",
+    "status": "config",
+    "statusNote": "Statuses and alerts are configuration",
+    "cost": "Included with the e-signature tool.",
+    "confirm": "Exactly which statuses the chosen e-signature tool writes back to Salesforce.",
+    "photo": "hail-damage.jpg",
+    "roofr": {
+      "shot": "roofr-automation.png",
+      "caption": "A Roofr automation that runs when a proposal is signed. Generic example from Roofr's help center; your own screen replaces it.",
+      "points": [
+        "\"Viewed\" status when the homeowner opens the proposal (added June 2026)",
+        "Time-stamped status history on the job card",
+        "Click and time-on-page tracking aren't documented"
+      ]
+    },
+    "sf": {
+      "shot": "sf-proposal-status.png",
+      "caption": "Proposal status with sent, viewed and signed times on the quote in the Cannon demo org. The values are simulated; the e-signature tool writes the real ones.",
+      "points": [
+        "Sent, viewed and signed statuses land on the quote with the time",
+        "A Flow alerts the rep the moment a proposal is viewed",
+        "Salesforce email open tracking can also be turned on",
+        "Reports show proposals that were viewed but not signed"
+      ]
+    },
+    "module": "tracking"
+  },
+  {
+    "slug": "e-signature",
+    "nav": "E-signature",
+    "title": "Getting it signed, on site or by link",
+    "concern": "E-signatures are included in Roofr. In Salesforce they look like a new cost.",
+    "answer": "You're right, it's a new line. There are three ways to handle it, and one uses licenses you're already buying, for signing on site. We'll bring the yearly cost of each at your sending volume.",
+    "short": "A new line versus Roofr. Three options, and on-site signing uses licenses you already have.",
+    "status": "confirm",
+    "statusNote": "Yearly cost due Monday",
+    "cost": "New compared with Roofr. It depends on how many people send proposals.",
+    "confirm": "The all-in yearly cost of each option for your sending volume, and whether on-site signature can be used for quotes.",
+    "photo": "before-front.jpg",
+    "roofr": {
+      "shot": "roofr-sign.png",
+      "caption": "The homeowner signing a Roofr proposal. Generic example from Roofr's help center.",
+      "points": [
+        "Built in, with unlimited signatures on Essentials and Scale at no extra charge",
+        "Sign on the device, or from an email or text link",
+        "Supports co-signers"
+      ]
+    },
+    "sf": {
+      "shot": "sf-signature.png",
+      "caption": "Sign & Close in the Cannon demo org: the homeowner signs on the rep's tablet or phone, and the signature is saved on the deal.",
+      "points": [
+        "On site: the homeowner signs on the rep's device, as in the demo",
+        "By link: DocuSign or Appiphony sends the proposal and writes the status back",
+        "Each signed proposal is stored on the job record"
+      ]
+    },
+    "module": "esign"
+  },
+  {
+    "slug": "cost",
+    "nav": "Cost",
+    "title": "The full cost, line by line",
+    "concern": "Every answer seems to add hours or a fee. What is the real all-in number?",
+    "answer": "Licenses are $19,992 a year, locked for three years. Every add-on is listed on its own line, marked as quoted, optional or still confirming. Nothing is folded in quietly.",
+    "short": "$19,992 a year in licenses, locked for 3 years. Every add-on on its own line.",
+    "status": "confirm",
+    "statusNote": "2 lines still confirming",
+    "cost": "$19,992 a year in licenses, $59,976 over the 3-year term.",
+    "confirm": "The Advanced PDFs and e-signature lines, both due Monday.",
+    "photo": "underlayment.jpg",
+    "module": "cost"
+  },
+  {
+    "slug": "your-team",
+    "nav": "Your team",
+    "title": "What changes for your team day to day",
+    "concern": "Beyond sales, will this make life easier for production and the crews, or just add more screens?",
+    "answer": "Sales, production and crews work from the same job record. Production sees what's scheduled and what still needs materials. Crews get the job, checklist and photos on their phones, even offline.",
+    "short": "Sales, production and crews on one job record, with crews working from their phones.",
+    "status": "native",
+    "statusNote": "Shown live in the Nov 13 demo",
+    "cost": "Included in your licenses.",
+    "confirm": "Nothing open. A recording of the Nov 13 demo is available.",
+    "photo": "flashing.jpg",
+    "roofr": {
+      "shot": "roofr-job-details.png",
+      "caption": "Job details on a Roofr job card. Generic example from Roofr's help center; your own screen replaces it.",
+      "points": [
+        "Work orders go to crews by email or text",
+        "Crew management and calendar events are on the Scale plan",
+        "Scheduling and the field team's checklists live in other tools"
+      ]
+    },
+    "sf": {
+      "shot": "sf-production.png",
+      "caption": "The production view of the Cannon Command Center in the demo org: material orders waiting for review, overdue items and jobs coming up.",
+      "extra": {
+        "shot": "sf-demo-journey.png",
+        "caption": "The Nov 13 demo journey, from the first call through the crew's punch list, close-out and signed service report."
+      },
+      "points": [
+        "Production sees what's scheduled and what still needs a material order",
+        "The Field Service app works offline, with required checklists and photos",
+        "Signatures are captured on the service report",
+        "Subcontractors use Technician licenses: work orders, checklists and photos only"
+      ]
+    },
+    "module": "team"
+  }
+]

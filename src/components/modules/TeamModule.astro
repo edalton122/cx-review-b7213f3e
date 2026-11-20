@@ -1,0 +1,58 @@
+---
+import { photoUrl } from '../../lib/assets';
+
+const roles = [
+  {
+    title: 'Sales reps',
+    photo: 'before-front.jpg',
+    items: [
+      'Every lead shows its status and days in that status',
+      'Quotes build from the measurement report',
+      'Proposals, signatures and follow-ups on one record',
+    ],
+  },
+  {
+    title: 'Production',
+    photo: 'underlayment.jpg',
+    items: [
+      'What\'s scheduled, and what still needs a material order',
+      'Material orders waiting for review, with a clock',
+      'Drag-and-drop crew schedule',
+    ],
+  },
+  {
+    title: 'Crews and subs',
+    photo: 'flashing.jpg',
+    items: [
+      'The job, address and contacts on their phone',
+      'Required checklist steps and photos, even offline',
+      'Homeowner signs the service report on site',
+    ],
+  },
+  {
+    title: 'You and the office',
+    photo: 'roof-after.jpg',
+    items: [
+      'Pipeline, production and payouts on one screen',
+      'No re-entering won jobs in another system',
+      'QuickBooks sync if you add it',
+    ],
+  },
+];
+---
+<div class="sec-head">
+  <p class="eyebrow">Role by role</p>
+  <h2>What each person's day looks like</h2>
+  <p class="sub">All of this was shown live in the Nov 13 demo, and a recording is available.</p>
+</div>
+<div class="roles">
+  {roles.map((r) => {
+    const url = photoUrl(r.photo);
+    return (
+      <article class="role">
+        <div class="photo" style={url ? `background-image:url('${url}')` : undefined}><h3>{r.title}</h3></div>
+        <ul>{r.items.map((i) => <li>{i}</li>)}</ul>
+      </article>
+    );
+  })}
+</div>

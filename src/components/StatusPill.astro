@@ -1,0 +1,11 @@
+---
+import site from '../data/site.json';
+
+interface Props {
+  status: string;
+  label?: string;
+}
+const { status, label } = Astro.props;
+const s = site.statuses.find((x) => x.key === status);
+---
+<span class={`pill ${status}`} title={s?.meaning}>{label ?? s?.label ?? status}</span>

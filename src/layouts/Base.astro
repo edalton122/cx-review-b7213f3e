@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+import concerns from '../data/concerns.json';
+import site from '../data/site.json';
+import { brandUrl, href } from '../lib/assets';
+import Lightbox from '../components/Lightbox.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  current: string;
+}
+const { title, current } = Astro.props;
+const logo = brandUrl('cannon-gold.png');
+const tabs = [
+  { slug: '', n: '', label: 'Overview' },
+  ...concerns.map((c, i) => ({ slug: c.slug, n: String(i + 1).padStart(2, '0'), label: c.nav })),
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="icon" href="data:," />
+    <title>{title} · Cannon Exteriors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700;800&display=swap" />
+  </head>
+  <body>
+    <header class="site-head">
+      <div class="wrap head-bar">
+        <a class="brand" href={href()} aria-label="Cannon Exteriors, overview">
+          {logo ? <img src={logo} alt="Cannon Exteriors" width="117" height="46" /> : <strong>Cannon Exteriors</strong>}
+        </a>
+        <div class="head-title">
+          <span class="k">Moving from Roofr to Salesforce</span>
+          <span class="t">Your seven concerns, answered</span>
+        </div>
+        <div class="head-meta">
+          <strong>Review: {site.meetingDate}, {site.meetingTime}</strong>
+          Updated {site.updated}
+        </div>
+      </div>
+      <nav class="wrap tabs" aria-label="Concerns">
+        {tabs.map((t) => (
+          <a class="tab" href={href(t.slug ? `${t.slug}/` : '')} aria-current={t.slug === current ? 'page' : undefined}>
+            {t.n && <span class="n">{t.n}</span>}
+            {t.label}
+          </a>
+        ))}
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <Lightbox />
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>

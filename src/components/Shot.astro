@@ -1,0 +1,26 @@
+---
+import { shotUrl } from '../lib/assets';
+
+interface Props {
+  file?: string;
+  caption: string;
+  address: string;
+  doc?: boolean;
+}
+const { file, caption, address, doc = false } = Astro.props;
+const url = shotUrl(file);
+const full = (file && shotUrl(file.replace(/\.png$/, '-full.png'))) || url;
+---
+{url && (
+  <figure class="shot-fig">
+    <button type="button" class:list={['frame', 'shot', { doc }]} data-full={full} data-caption={caption} aria-label={`Enlarge: ${caption}`}>
+      <span class="chrome" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <em>{address}</em>
+        <span class="zoom">Click to enlarge</span>
+      </span>
+      <img src={url} alt={caption} loading="lazy" />
+    </button>
+    <figcaption class="cap">{caption}</figcaption>
+  </figure>
+)}

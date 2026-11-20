@@ -1,0 +1,34 @@
+---
+type Cell = [v: 'yes' | 'no' | 'maybe', t: string];
+const rows: { need: string; roofr: Cell; std: Cell; adv: Cell }[] = [
+  { need: 'Cannon logo, colors and terms', roofr: ['yes', 'Yes'], std: ['yes', 'Yes'], adv: ['yes', 'Yes'] },
+  { need: 'Line items, quantities and pricing', roofr: ['yes', 'Yes'], std: ['yes', 'Yes'], adv: ['yes', 'Yes'] },
+  { need: 'Signature block', roofr: ['yes', 'Yes'], std: ['yes', 'Yes'], adv: ['yes', 'Yes'] },
+  { need: 'Good, better and best on one document', roofr: ['yes', 'Yes'], std: ['no', 'One quote per option'], adv: ['yes', 'Yes'] },
+  { need: 'Job photos, including CompanyCam', roofr: ['yes', 'Yes'], std: ['no', 'No'], adv: ['yes', 'Yes'] },
+  { need: 'Hide a line but keep it in the total', roofr: ['yes', 'Yes'], std: ['maybe', 'Confirming'], adv: ['maybe', 'Confirming'] },
+  { need: 'Homeowner picks an option online', roofr: ['yes', 'Yes'], std: ['no', 'Rep sends the chosen option'], adv: ['maybe', 'Confirming'] },
+];
+---
+<div class="sec-head">
+  <p class="eyebrow">What's covered</p>
+  <h2>What your proposal needs, and what covers it</h2>
+  <p class="sub">The standard template is included with your licenses. The right-hand column is either Salesforce Document Generation, which may already be included, or Strong CRM's Advanced PDFs add-on.</p>
+</div>
+<div class="matrix-scroll">
+  <table class="matrix">
+    <thead>
+      <tr><th>Proposal needs</th><th>Roofr today</th><th class="sfc">Standard template · included</th><th class="sfc">Document Generation or Advanced PDFs</th></tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <th scope="row">{r.need}</th>
+          <td><span class={r.roofr[0]}>{r.roofr[1]}</span></td>
+          <td><span class={r.std[0]}>{r.std[1]}</span></td>
+          <td><span class={r.adv[0]}>{r.adv[1]}</span></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

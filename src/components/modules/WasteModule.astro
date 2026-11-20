@@ -1,0 +1,59 @@
+---
+import waste from '../../data/waste.json';
+import { calcLine, pluralizeUnit } from '../../lib/waste';
+
+const defaultComplexity = waste.complexity.find((c) => (c as { default?: boolean }).default)?.value ?? 0;
+const fmt = (n: number) => (Math.round(n * 10) / 10).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const rows = waste.lines.map((l) => ({ ...l, r: calcLine(l, defaultComplexity) }));
+const cx = waste.complexity;
+const shingles = rows[0];
+---
+<div class="sec-head">
+  <p class="eyebrow">Try it yourself</p>
+  <h2>The waste worksheet</h2>
+  <p class="sub">This works the same way as the quote in our demo org. Change a material's waste % or the roof complexity, and the order quantities update. Measurements and coverages are example values; yours come from QuickMeasure and your catalog.</p>
+</div>
+<div class="ws-grid">
+  <aside class="ws-side">
+    <h3>Example roof</h3>
+    <p>{waste.job.squares} squares, predominant pitch {waste.job.pitch}</p>
+    <label id="cx-label">Roof complexity</label>
+    <div class="cx-opts" role="group" aria-labelledby="cx-label" id="complexity">
+      {cx.map((c) => (
+        <button type="button" data-value={c.value} aria-pressed={String(c.value === defaultComplexity)}>
+          <b>{c.name}</b><span>{c.detail}</span>
+        </button>
+      ))}
+    </div>
+    <div class="ws-math">
+      Shingles, worked out
+      <p class="eq" id="ws-eq">{shingles.measured} sq × {100 + shingles.r.totalWastePct}% ÷ ⅓ sq per bundle = {shingles.r.order} bundles</p>
+    </div>
+  </aside>
+  <div class="ws-table">
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr><th>Material</th><th class="num">Measured</th><th class="num">Waste %</th><th class="num">Total waste</th><th class="num">With waste</th><th class="num">Order</th></tr>
+        </thead>
+        <tbody id="wsBody">
+          {rows.map((l) => (
+            <tr data-line={l.id}>
+              <td class="mat"><b>{l.name}</b><span>{l.coverageLabel}</span></td>
+              <td class="num">{l.measured} {l.mu}</td>
+              <td class="num">
+                <label class="sr-only" for={`w-${l.id}`}>Waste % for {l.name}</label>
+                <input type="number" id={`w-${l.id}`} min="0" max="40" step="1" value={l.waste} />
+              </td>
+              <td class="num" data-cell="total">{l.r.totalWastePct}%</td>
+              <td class="num" data-cell="with">{fmt(l.r.withWaste)} {l.mu}</td>
+              <td class="num"><span class="order" data-cell="order">{l.r.order}<small>{pluralizeUnit(l.unit, l.r.order)}</small></span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="ws-foot">Order = measured × (1 + waste % + complexity) ÷ coverage, always rounded up. In Salesforce each line's waste starts at the product's default, and reps can change it.</p>
+  </div>
+</div>
+<script type="application/json" id="waste-data" set:html={JSON.stringify(waste.lines)} />

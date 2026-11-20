@@ -1,7 +1,8 @@
 #!/bin/bash
 # Builds the site and publishes it to the gh-pages branch of the repo in `origin`.
-# Third-party and customer screenshots (public/screenshots/roofr-*) are left out of the published build.
-# Usage: scripts/publish.sh
+# Roofr screenshots (public/screenshots/roofr-*) are left out of the published build unless INCLUDE_ROOFR=1;
+# without them each concern page shows a "your Roofr screen goes here" panel.
+# Usage: scripts/publish.sh   or   INCLUDE_ROOFR=1 scripts/publish.sh
 set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT=$(pwd)
@@ -14,7 +15,9 @@ REPO=${OWNER_REPO##*/}
 HOLD=$(mktemp -d)
 restore() { mv "$HOLD"/roofr-* "$ROOT/public/screenshots/" 2>/dev/null || true; rmdir "$HOLD" 2>/dev/null || true; }
 trap restore EXIT
-mv public/screenshots/roofr-* "$HOLD"/ 2>/dev/null || true
+if [ "${INCLUDE_ROOFR:-0}" != "1" ]; then
+  mv public/screenshots/roofr-* "$HOLD"/ 2>/dev/null || true
+fi
 
 npm test
 SITE="https://$OWNER.github.io" BASE="/$REPO/" npm run build

@@ -1,38 +1,32 @@
 import { calcLine, pluralizeUnit, type WasteLine } from '../lib/waste';
 
-const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// ---------- Keep the active tab visible on narrow screens ----------
+document.querySelector<HTMLElement>('.tab[aria-current="page"]')?.scrollIntoView({ block: 'nearest', inline: 'center' });
 
-// ---------- Status filters ----------
-const cards = Array.from(document.querySelectorAll<HTMLElement>('#cards .card'));
-const filterBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('#filters button'));
-const summaryBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('#summary button'));
-
-function applyFilter(f: string) {
-  cards.forEach((c) => {
-    c.hidden = !(f === 'all' || c.dataset.status === f);
+// ---------- Side-by-side layout toggle ----------
+const compare = document.querySelector<HTMLElement>('.compare');
+document.querySelectorAll<HTMLButtonElement>('.seg button').forEach((btn, _, all) => {
+  btn.addEventListener('click', () => {
+    if (!compare) return;
+    compare.dataset.view = btn.dataset.view;
+    all.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
   });
-  filterBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === f)));
-  summaryBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === f)));
-}
-filterBtns.forEach((b) => b.addEventListener('click', () => applyFilter(b.dataset.filter!)));
-summaryBtns.forEach((b) =>
-  b.addEventListener('click', () => {
-    const active = b.getAttribute('aria-pressed') === 'true';
-    applyFilter(active ? 'all' : b.dataset.filter!);
-    document.getElementById('musthaves')?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-  }),
-);
+});
 
 // ---------- Waste worksheet ----------
 const dataEl = document.getElementById('waste-data');
-const complexity = document.getElementById('complexity') as HTMLSelectElement | null;
-if (dataEl && complexity) {
+const cxGroup = document.getElementById('complexity');
+if (dataEl && cxGroup) {
   const lines: WasteLine[] = JSON.parse(dataEl.textContent || '[]');
+  const eq = document.getElementById('ws-eq');
   const fmt = (n: number) =>
     (Math.round(n * 10) / 10).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const complexity = () =>
+    parseFloat(cxGroup.querySelector<HTMLButtonElement>('button[aria-pressed="true"]')?.dataset.value || '0') || 0;
+
   const recalc = () => {
-    const add = parseFloat(complexity.value) || 0;
-    lines.forEach((l) => {
+    const add = complexity();
+    lines.forEach((l, i) => {
       const row = document.querySelector<HTMLElement>(`tr[data-line="${l.id}"]`);
       const input = document.getElementById(`w-${l.id}`) as HTMLInputElement | null;
       if (!row || !input) return;
@@ -40,12 +34,24 @@ if (dataEl && complexity) {
       const r = calcLine(l, add, wastePct);
       row.querySelector('[data-cell="total"]')!.textContent = `${r.totalWastePct}%`;
       row.querySelector('[data-cell="with"]')!.textContent = `${fmt(r.withWaste)} ${l.mu}`;
-      row.querySelector('[data-cell="order"]')!.textContent = `${r.order} ${pluralizeUnit(l.unit, r.order)}`;
+      const order = row.querySelector<HTMLElement>('[data-cell="order"]')!;
+      const before = order.firstChild?.textContent;
+      order.innerHTML = `${r.order}<small>${pluralizeUnit(l.unit, r.order)}</small>`;
+      if (before !== String(r.order)) {
+        order.classList.remove('bump');
+        void order.offsetWidth;
+        order.classList.add('bump');
+      }
+      if (i === 0 && eq) eq.textContent = `${l.measured} sq × ${100 + r.totalWastePct}% ÷ ⅓ sq per bundle = ${r.order} bundles`;
     });
   };
   document.getElementById('wsBody')?.addEventListener('input', recalc);
-  complexity.addEventListener('change', recalc);
-  recalc();
+  cxGroup.querySelectorAll<HTMLButtonElement>('button').forEach((b, _, all) =>
+    b.addEventListener('click', () => {
+      all.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      recalc();
+    }),
+  );
 }
 
 // ---------- Lightbox ----------
@@ -63,35 +69,5 @@ document.addEventListener('click', (e) => {
 });
 document.getElementById('lbClose')?.addEventListener('click', () => lb?.close());
 lb?.addEventListener('click', (e) => {
-  if (e.target === lb) lb.close();
-});
-
-// ---------- Scroll spy ----------
-const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.tabs a'));
-const sections = links.map((a) => document.querySelector(a.getAttribute('href')!)).filter(Boolean) as Element[];
-if ('IntersectionObserver' in window) {
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((en) => {
-        if (en.isIntersecting) {
-          links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === `#${en.target.id}`));
-        }
-      });
-    },
-    { rootMargin: '-30% 0px -60% 0px' },
-  );
-  sections.forEach((s) => io.observe(s));
-}
-
-// ---------- Theme toggle ----------
-const root = document.documentElement;
-const stored = localStorage.getItem('theme');
-if (stored) root.dataset.theme = stored;
-document.getElementById('themeBtn')?.addEventListener('click', () => {
-  const dark = root.dataset.theme
-    ? root.dataset.theme === 'dark'
-    : matchMedia('(prefers-color-scheme: dark)').matches;
-  const next = dark ? 'light' : 'dark';
-  root.dataset.theme = next;
-  localStorage.setItem('theme', next);
+  if (e.target === lb || (e.target as HTMLElement).closest('.lb-body')) lb.close();
 });
