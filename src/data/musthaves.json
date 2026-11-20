@@ -14,7 +14,10 @@
       "The report arrives by email to Salesforce, or a rep uploads it, and quote lines build automatically"
     ],
     "cost": "20 hours, replacing the Roofr integration line in the SOW (no net change)",
-    "note": { "kind": "Confirming", "text": "GAF doesn't publish its XML layout, so Strong CRM will test the parser on one of your real reports." }
+    "note": {
+      "kind": "Confirming",
+      "text": "GAF doesn't publish its XML layout, so Strong CRM will test the parser on one of your real reports."
+    }
   },
   {
     "id": "waste",
@@ -33,7 +36,25 @@
       "Quantities round up to whole bundles, rolls and pieces"
     ],
     "cost": "Fields and a Flow in the base build",
-    "note": { "kind": "Try it", "text": "The waste worksheet below works the way the quote will. Confirming: Strong CRM's hours for this.", "link": "#waste" }
+    "note": {
+      "kind": "Try it",
+      "text": "The waste worksheet below works the way the quote does. The same six lines run in our demo org, where a Flow sets each line's waste % and order quantity. Confirming: Strong CRM's hours for this.",
+      "link": "#waste"
+    },
+    "shots": [
+      {
+        "src": "sf-waste-lines.png",
+        "side": "sf",
+        "label": "Demo org",
+        "caption": "Quote line items in the Cannon demo org: measured quantity, waste % and order quantity for each material. A before-save Flow sets the waste % and the quantity. Example job: 28.4 squares, 8/12, Moderate."
+      },
+      {
+        "src": "sf-product-defaults.png",
+        "side": "sf",
+        "label": "Demo org",
+        "caption": "Each product carries its default waste % and its coverage per order unit (shingles: 0.3333 sq per bundle, or 3 bundles per sq)."
+      }
+    ]
   },
   {
     "id": "proposal",
@@ -51,9 +72,23 @@
       "For those: Salesforce Document Generation (templates built in Word with images and conditional sections), or Strong CRM's Advanced PDFs"
     ],
     "cost": "Included, or the Advanced PDFs add-on",
-    "note": { "kind": "Confirming", "text": "Whether Document Generation is included with your licenses, which would make Advanced PDFs unnecessary, and how many photos fit on a page." },
+    "note": {
+      "kind": "Confirming",
+      "text": "Whether Document Generation is included with your licenses, which would make Advanced PDFs unnecessary, and how many photos fit on a page."
+    },
     "shots": [
-      { "src": "roofr-proposal-editor.png", "side": "roofr", "caption": "Roofr proposal editor with dynamic fields (generic example from Roofr's help center; Cannon's own screenshot replaces it)" }
+      {
+        "src": "roofr-proposal-editor.png",
+        "side": "roofr",
+        "label": "Roofr (generic)",
+        "caption": "Roofr proposal editor with dynamic fields (generic example from Roofr's help center; Cannon's own screenshot replaces it)"
+      },
+      {
+        "src": "sf-quote-pdf.png",
+        "side": "sf",
+        "label": "Demo org",
+        "caption": "Sample proposal PDF saved on the quote in the Cannon demo org. It was generated for this preview. The standard Quote Template (logo, line items, totals, signature block) is configured in Setup and will look similar."
+      }
     ]
   },
   {
@@ -72,7 +107,18 @@
       "Salesforce email open tracking can also be turned on"
     ],
     "cost": "Included with the e-signature tool",
-    "note": { "kind": "Confirming", "text": "The exact statuses the chosen e-signature tool reports." }
+    "note": {
+      "kind": "Confirming",
+      "text": "The exact statuses the chosen e-signature tool reports. The screenshot uses simulated values."
+    },
+    "shots": [
+      {
+        "src": "sf-proposal-status.png",
+        "side": "sf",
+        "label": "Demo org",
+        "caption": "Proposal status and timestamps on the quote in the Cannon demo org (Sent, Viewed, Signed). The values here are simulated; the e-signature tool writes the real ones."
+      }
+    ]
   },
   {
     "id": "esign",
@@ -90,7 +136,10 @@
       "Option C: on-site signature in the Field Service mobile app, using licenses you already have (to be confirmed for quotes)"
     ],
     "cost": "New compared with Roofr; depends on how many people send proposals",
-    "note": { "kind": "Confirming", "text": "The all-in yearly cost of each option for your sending volume." }
+    "note": {
+      "kind": "Confirming",
+      "text": "The all-in yearly cost of each option for your sending volume."
+    }
   },
   {
     "id": "quickbooks",
@@ -106,7 +155,10 @@
       "Customers, jobs and invoices stay in sync with the opportunity"
     ],
     "cost": "About 20 hours (optional)",
-    "note": { "kind": "Confirming", "text": "QuickBooks Online or Desktop, and what triggers an invoice (deposit, milestone or completion)." }
+    "note": {
+      "kind": "Confirming",
+      "text": "QuickBooks Online or Desktop, and what triggers an invoice (deposit, milestone or completion)."
+    }
   },
   {
     "id": "field",
@@ -124,21 +176,37 @@
       "Sales and production live on the same job record"
     ],
     "cost": "Included in your licenses",
-    "note": { "kind": "", "text": "Shown in the Nov 13 demo; a recording is available." }
+    "note": {
+      "kind": "",
+      "text": "Shown in the Nov 13 demo; a recording is available."
+    },
+    "shots": [
+      {
+        "src": "sf-demo-journey.png",
+        "side": "sf",
+        "label": "Nov 13 demo",
+        "caption": "The Nov 13 demo journey, from the first call through the crew's punch list, close-out and signed service report."
+      }
+    ]
   },
   {
     "id": "suppliers",
     "title": "Ordering materials from suppliers",
     "why": "Only matters if your team orders through Roofr today.",
     "status": "gap",
-    "today": ["Direct ordering and live pricing with ABC Supply, SRS and QXO"],
+    "today": [
+      "Direct ordering and live pricing with ABC Supply, SRS and QXO"
+    ],
     "salesforce": [
       "No built-in supplier connection",
       "The material list on the work order can be emailed to your supplier rep automatically",
       "A direct supplier connection would be a custom build"
     ],
     "cost": "Email handoff is in scope; a direct connection would be quoted separately",
-    "note": { "kind": "Question for you", "text": "Do you place supplier orders through Roofr today?" }
+    "note": {
+      "kind": "Question for you",
+      "text": "Do you place supplier orders through Roofr today?"
+    }
   },
   {
     "id": "your-list",

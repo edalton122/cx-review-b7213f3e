@@ -1,0 +1,12 @@
+{
+  "owner": "Strong CRM",
+  "due": "Before or during the Mon, Nov 23 call",
+  "items": [
+    "Hours to build the waste Flow",
+    "Whether Salesforce Document Generation is included with your licenses, which would make Advanced PDFs unnecessary, and how many photos fit on a proposal page",
+    "The all-in yearly e-signature cost for your sending volume, for each option",
+    "Whether the QuickMeasure parser works on one of your real XML files",
+    "Whether Field Service mobile signature capture can be used to sign quotes on site",
+    "Exactly which statuses the chosen e-signature tool writes back to Salesforce"
+  ]
+}

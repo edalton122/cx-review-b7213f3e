@@ -24,7 +24,7 @@ const byHand = (steps: { tag: string }[]) => steps.filter((s) => s.tag === 'hand
         </div>
         <ol class="steps" data-lane={lane.key}>
           {lane.steps.map((s, i) => {
-            const file = `${lane.prefix}-${String(i + 1).padStart(2, '0')}.png`;
+            const file = (s as { shot?: string }).shot ?? `${lane.prefix}-${String(i + 1).padStart(2, '0')}.png`;
             const url = shotUrl(file);
             return (
               <li>
@@ -35,7 +35,7 @@ const byHand = (steps: { tag: string }[]) => steps.filter((s) => s.tag === 'hand
                     <div class="shots">
                       <button type="button" class="shot" data-full={url} data-caption={`${lane.title}, step ${i + 1}: ${s.title}`}>
                         <img src={url} alt={`Screenshot: ${s.title}`} loading="lazy" />
-                        <span>{lane.key === 'roofr' ? 'Generic Roofr example (replace with Cannon\'s own)' : 'Salesforce'}</span>
+                        <span>{lane.key === 'roofr' ? 'Generic Roofr example (replace with Cannon\'s own)' : 'Demo org'}</span>
                       </button>
                     </div>
                   )}

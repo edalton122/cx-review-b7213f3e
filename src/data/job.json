@@ -1,0 +1,64 @@
+{
+  "title": "Anna Lindgren's roof, from report to signature",
+  "sub": "This is a sample homeowner in our demo org, not a Cannon customer. Your own QuickMeasure report and Roofr proposal replace it once we have them.",
+  "steps": [
+    {
+      "title": "Measurements arrive",
+      "detail": "28.4 squares at 8/12, 186 lf of eaves and valleys, 212 lf of eaves and rakes, 64 lf of ridge and hip. In the live build the QuickMeasure XML supplies these.",
+      "status": "build",
+      "label": "Partner build"
+    },
+    {
+      "title": "Quote lines build with per-line waste",
+      "detail": "Shingles 12% plus 2% for a moderate roof is 14%, so 98 bundles. Underlayment 5% plus 2% is 4 rolls. Change any line's waste % and the quantity updates.",
+      "status": "config",
+      "label": "Configured",
+      "shots": [
+        {
+          "src": "sf-waste-lines.png",
+          "caption": "Quote line items in the demo org: measured quantity, waste % and order quantity for each material.",
+          "label": "Demo org"
+        }
+      ]
+    },
+    {
+      "title": "The proposal PDF",
+      "detail": "Logo, scope, line items, total and a signature block. Job photos and sections that change by option need Document Generation or Advanced PDFs.",
+      "status": "confirm",
+      "label": "Confirming",
+      "shots": [
+        {
+          "src": "sf-quote-pdf.png",
+          "caption": "Sample proposal PDF saved on the quote in the demo org. It was generated for this preview.",
+          "label": "Demo org"
+        }
+      ]
+    },
+    {
+      "title": "Sent, viewed, signed",
+      "detail": "The e-signature tool writes each status and time back to the quote, and a Flow can alert the rep when it is viewed. The values shown are simulated.",
+      "status": "config",
+      "label": "Configured",
+      "shots": [
+        {
+          "src": "sf-proposal-status.png",
+          "caption": "Proposal status and timestamps on the quote in the demo org. Values are simulated.",
+          "label": "Demo org"
+        }
+      ]
+    },
+    {
+      "title": "The signed quote starts the job",
+      "detail": "Work order, material list and crew schedule on the same record, then punch list and photos on the crew's phone.",
+      "status": "native",
+      "label": "Native",
+      "shots": [
+        {
+          "src": "sf-demo-journey.png",
+          "caption": "The Nov 13 demo journey: from the first call through close-out, signature and payout.",
+          "label": "Nov 13 demo"
+        }
+      ]
+    }
+  ]
+}

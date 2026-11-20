@@ -2,7 +2,7 @@
 import { shotUrl } from '../lib/assets';
 import site from '../data/site.json';
 
-interface Shot { src: string; side: 'roofr' | 'sf'; caption: string }
+interface Shot { src: string; side: 'roofr' | 'sf'; caption: string; label?: string }
 interface Item {
   id: string;
   title: string;
@@ -36,7 +36,7 @@ const shots = (item.shots ?? []).map((s) => ({ ...s, url: shotUrl(s.src) })).fil
               {shots.filter((s) => s.side === 'roofr').map((s) => (
                 <button type="button" class="shot" data-full={s.url} data-caption={s.caption}>
                   <img src={s.url!} alt={s.caption} loading="lazy" />
-                  <span>Screenshot</span>
+                  <span>{s.label ?? 'Screenshot'}</span>
                 </button>
               ))}
             </div>
@@ -50,7 +50,7 @@ const shots = (item.shots ?? []).map((s) => ({ ...s, url: shotUrl(s.src) })).fil
               {shots.filter((s) => s.side === 'sf').map((s) => (
                 <button type="button" class="shot" data-full={s.url} data-caption={s.caption}>
                   <img src={s.url!} alt={s.caption} loading="lazy" />
-                  <span>Screenshot</span>
+                  <span>{s.label ?? 'Screenshot'}</span>
                 </button>
               ))}
             </div>

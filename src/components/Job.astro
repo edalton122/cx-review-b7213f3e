@@ -1,0 +1,41 @@
+---
+import job from '../data/job.json';
+import { shotUrl } from '../lib/assets';
+
+type Shot = { src: string; caption: string; label?: string };
+type Step = { title: string; detail: string; status: string; label: string; shots?: Shot[] };
+const steps = (job.steps as Step[]).map((s) => ({
+  ...s,
+  shots: (s.shots ?? []).map((x) => ({ ...x, url: shotUrl(x.src) })).filter((x) => x.url),
+}));
+---
+<section id="job">
+  <div class="sec-head">
+    <p class="eyebrow">One job, end to end</p>
+    <h2>{job.title}</h2>
+    <p class="muted">{job.sub}</p>
+  </div>
+  <div class="lane">
+    <ol class="steps job-steps">
+      {steps.map((s) => (
+        <li>
+          <div>
+            <p class="t">{s.title}</p>
+            <p class="x">{s.detail}</p>
+            {s.shots.length > 0 && (
+              <div class="shots">
+                {s.shots.map((x) => (
+                  <button type="button" class="shot" data-full={x.url} data-caption={x.caption}>
+                    <img src={x.url!} alt={x.caption} loading="lazy" />
+                    <span>{x.label ?? 'Screenshot'}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <span class={`pill s-${s.status}`}>{s.label}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
