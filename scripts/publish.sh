@@ -4,6 +4,7 @@
 # Usage: scripts/publish.sh
 set -euo pipefail
 cd "$(dirname "$0")/.."
+ROOT=$(pwd)
 
 REMOTE=$(git remote get-url origin)
 OWNER_REPO=$(echo "$REMOTE" | sed -E 's#.*github.com[:/]##; s#\.git$##')
@@ -11,7 +12,7 @@ OWNER=${OWNER_REPO%%/*}
 REPO=${OWNER_REPO##*/}
 
 HOLD=$(mktemp -d)
-restore() { mv "$HOLD"/roofr-* public/screenshots/ 2>/dev/null || true; rmdir "$HOLD" 2>/dev/null || true; }
+restore() { mv "$HOLD"/roofr-* "$ROOT/public/screenshots/" 2>/dev/null || true; rmdir "$HOLD" 2>/dev/null || true; }
 trap restore EXIT
 mv public/screenshots/roofr-* "$HOLD"/ 2>/dev/null || true
 
